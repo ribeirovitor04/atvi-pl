@@ -1,14 +1,19 @@
 import promptSync from "prompt-sync";
+
 export default class Entrada {
-    public receberNumero(mensagem: string): number {
-        let prompt = promptSync();
-        let valor = prompt(mensagem)
-        let numero  = new Number(valor)
-        return numero.valueOf()
+  private prompt = promptSync();
+
+  receberNumero(mensagem: string): number {
+    const valor = this.prompt(mensagem);
+    const numero = Number(valor);
+    if (isNaN(numero)) {
+      console.log("Valor inválido, por favor digite um número.");
+      return this.receberNumero(mensagem);
     }
-    public receberTexto(mensagem: string): string {
-        let prompt = promptSync();
-        let texto = prompt(mensagem)
-        return texto
-    }
+    return numero;
+  }
+
+  receberTexto(mensagem: string): string {
+    return this.prompt(mensagem);
+  }
 }
